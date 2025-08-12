@@ -1,0 +1,33 @@
+---
+interface IButtonProps{
+  variant?: 'primary' | 'secondary';
+  href?: string;
+  class?: string;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+const { variant = 'primary', href, class: className, type = 'button' }: IButtonProps = Astro.props;
+
+const baseClass = 'w-full inline-flex gap-2 items-center justify-center px-5 py-4 rounded-[14px] no-underline text-[var(--text)] font-extrabold tracking-[0.02em] bg-gradient-to-br from-[#0b1f17] to-[#0f0b19] border border-[#24353f] transition-transform transition-shadow transition-colors duration-200 shadow-[var(--glow-green)] hover:-translate-y-[1px] hover:shadow-[var(--glow-violet)] hover:bg-gradient-to-br hover:from-[#0e2b21] hover:to-[#150d22]';
+
+const variantClasses = {
+  primary: 'shadow-[var(--glow-green)]',
+  secondary: 'shadow-[var(--glow-violet)]'
+}
+
+const sizeClasses = {
+  large: 'text-[1.1rem] px-7 py-[1.2rem] rounded-[22px]',
+}
+
+const classes = `${baseClass} ${variantClasses[variant]} ${sizeClasses} ${className ? className : ''}`;
+---
+
+{href ? (
+  <a href={href} class={classes}>
+    <slot />
+  </a>
+) : (
+  <button type={type} class={classes}>
+    <slot />
+  </button>
+)}

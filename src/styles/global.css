@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+:root {
+  --bg: #07080d;
+  --bg-2: #0b0f16;
+  --bg-3: #0a0e14;
+  --text: #e6ffe8;
+  --muted: #98cbb0;
+  --primary: #10c86f;
+  --accent: #8f00ff;
+  --accent-soft: #a66cff;
+  --gold: #d4af37;
+
+  --radius: 18px;
+  --container: clamp(1040px, 94vw, 1600px);
+  --noise-opacity: 0.06;
+
+  /* Neon glows */
+  --glow-green: 0 0 1px #10c86f, 0 0 8px #10c86f, 0 0 28px #10c86f55;
+  --glow-violet: 0 0 1px #8f00ff, 0 0 10px #8f00ff, 0 0 32px #8f00ff66;
+  --glow-gold: 0 0 1px #d4af37, 0 0 10px #d4af3770, 0 0 26px #d4af3733;
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -3;
+  background: radial-gradient(
+      100% 120% at 50% 0%,
+      #10241b4f 0%,
+      transparent 65%
+    ),
+    radial-gradient(120% 100% at 120% 20%, #1a0e2b3d 0%, transparent 55%),
+    radial-gradient(120% 100% at -20% 80%, #0e1b153b 0%, transparent 60%),
+    repeating-linear-gradient(90deg, #0c121b 0 1px, transparent 1px 120px),
+    repeating-linear-gradient(180deg, #0c121b 0 1px, transparent 1px 120px);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  color: #ceffe1;
+  font-weight: bold;
+  background-color: #0c2016;
+  border: 1px solid #215a3c;
+  box-shadow: var(--glow-green);
+}

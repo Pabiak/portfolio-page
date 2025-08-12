@@ -1,0 +1,75 @@
+---
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang='pl'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+		<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name='generator' content={Astro.generator} />
+    <title>Piotr Łabiak - Frontend Developer</title>
+  </head>
+  <body class='grain'>
+    <div class='bg-grid' aria-hidden='true'></div>
+    <slot />
+  </body>
+</html>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+		height: 100%;
+    background: var(--bg);
+    color: var(--text);
+	}
+
+  body {
+    width: 100%;
+		height:500vh;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  .grain::before {
+    content: '';
+    position: fixed;
+    inset: -20vmax;
+    z-index: -2;
+    background-image: url('data:image/svg+xml;utf8,\
+      <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">\
+        <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="7"/></filter>\
+        <rect width="100%" height="100%" filter="url(%23n)" opacity="0.35" />\
+      </svg>');
+    background-size: 25rem 25rem;
+    mix-blend-mode: soft-light;
+    opacity: var(--noise-opacity);
+    animation: drift 28s linear infinite;
+  }
+
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -3;
+    background: radial-gradient(
+        100% 120% at 50% 0%,
+        #10241b4f 0%,
+        transparent 65%
+      ),
+      radial-gradient(120% 100% at 120% 20%, #1a0e2b3d 0%, transparent 55%),
+      radial-gradient(120% 100% at -20% 80%, #0e1b153b 0%, transparent 60%),
+      repeating-linear-gradient(90deg, #0c121b 0 1px, transparent 1px 120px),
+      repeating-linear-gradient(180deg, #0c121b 0 1px, transparent 1px 120px);
+  }
+</style>
