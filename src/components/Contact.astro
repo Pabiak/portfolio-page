@@ -1,0 +1,28 @@
+---
+import Button from "./Button.astro";
+---
+
+<section
+  id='contact'
+  class='w-full px-[clamp(3rem,_6vw,_6rem)] my-10 relative w-[min(var(--container), 92vw)] mx-auto'
+>
+  <h2
+    class='font-chakra text-[clamp(2rem,_4vw,_3rem)] m-0 mb-5 -tracking-tight font-bold'
+  >
+    Kontakt
+  </h2>
+  <div class='panel p-[clamp(1.2rem,_4vw,_2rem)] max-w-[880px] grid place-items-center gap-4 mx-auto'>
+      <p class='text-[var(--muted)] max-w-[70ch] text-center'>
+        Masz projekt lub pytanie?
+      </p>
+      <p class='text-[var(--muted)] max-w-[70ch] mb-4 text-center'>
+         Odezwij się - odpowiadam zwykle w 24h.
+      </p>
+      <div class="w-[clamp(20ch,_60vw,_40ch)]">
+        <Button
+          href='mailto:info@piotrlabiak.pl?subject=Zapytanie%20o%20wsp%C3%B3%C5%82prac%C4%99'
+          >Skontaktuj się ze mną
+        </Button>
+      </div>
+  </div>
+</section>

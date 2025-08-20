@@ -1,8 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
+import About from '../components/About.astro';
+import Technologies from '../components/Technologies.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout>
 	<Header />
+	<main class="flex flex-col gap-10">
+		<About />
+		<Technologies />
+		<Contact />
+		<Footer />
+	</main>
 </Layout>

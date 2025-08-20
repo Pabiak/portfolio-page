@@ -19,6 +19,13 @@
   --glow-green: 0 0 1px #10c86f, 0 0 8px #10c86f, 0 0 28px #10c86f55;
   --glow-violet: 0 0 1px #8f00ff, 0 0 10px #8f00ff, 0 0 32px #8f00ff66;
   --glow-gold: 0 0 1px #d4af37, 0 0 10px #d4af3770, 0 0 26px #d4af3733;
+
+  /* Fonts */
+  --font-chakra: 'Chakra Petch', sans-serif;
+}
+
+.font-chakra {
+  font-family: var(--font-chakra);
 }
 
 .bg-grid {
@@ -49,4 +56,33 @@
   background-color: #0c2016;
   border: 1px solid #215a3c;
   box-shadow: var(--glow-green);
+}
+
+.panel {
+  position: relative;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #0a1219, #070b11);
+  border: 1px solid #1f2a35;
+  box-shadow: 0 10px 40px #0008, inset 0 1px 0 #ffffff0b;
+}
+
+.tech {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.9rem;
+  text-align: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #18112a, #0f1624);
+  border: 1px solid #2e2150;
+  color: #eedcff;
+  font-weight: 800;
+  text-shadow: 0 0 6px #6500ff88;
+  box-shadow: var(--glow-violet);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tech:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 1px var(--accent-soft), 0 0 12px var(--accent-soft), 0 0 32px #a66cff66;
 }
