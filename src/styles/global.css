@@ -4,7 +4,9 @@
   --bg: #07080d;
   --bg-2: #0b0f16;
   --bg-3: #0a0e14;
+  --overlay: #00000080;
   --text: #e6ffe8;
+  --text-white: #eafff3;
   --muted: #98cbb0;
   --primary: #10c86f;
   --accent: #8f00ff;
@@ -19,6 +21,7 @@
   --glow-green: 0 0 1px #10c86f, 0 0 8px #10c86f, 0 0 28px #10c86f55;
   --glow-violet: 0 0 1px #8f00ff, 0 0 10px #8f00ff, 0 0 32px #8f00ff66;
   --glow-gold: 0 0 1px #d4af37, 0 0 10px #d4af3770, 0 0 26px #d4af3733;
+  --glow-muted: 0 0 1px #98cbb0, 0 0 8px #98cbb0, 0 0 28px #98cbb055;
 
   /* Fonts */
   --font-chakra: 'Chakra Petch', sans-serif;
@@ -26,22 +29,6 @@
 
 .font-chakra {
   font-family: var(--font-chakra);
-}
-
-.bg-grid {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -3;
-  background: radial-gradient(
-      100% 120% at 50% 0%,
-      #10241b4f 0%,
-      transparent 65%
-    ),
-    radial-gradient(120% 100% at 120% 20%, #1a0e2b3d 0%, transparent 55%),
-    radial-gradient(120% 100% at -20% 80%, #0e1b153b 0%, transparent 60%),
-    repeating-linear-gradient(90deg, #0c121b 0 1px, transparent 1px 120px),
-    repeating-linear-gradient(180deg, #0c121b 0 1px, transparent 1px 120px);
 }
 
 .chip {
@@ -85,4 +72,21 @@
 .tech:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 0 1px var(--accent-soft), 0 0 12px var(--accent-soft), 0 0 32px #a66cff66;
+}
+
+@keyframes raiseFromCenter {
+  0% {
+    opacity: 0;
+    transform: scale(0.1);
+    transform-origin: center;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: center;
+  }
+}
+
+.animation-raiseFromCenter {
+  animation: raiseFromCenter 0.3s ease forwards;
 }

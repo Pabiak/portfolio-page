@@ -1,0 +1,98 @@
+<nav
+  class="fixed inset-0 z-10 hidden place-items-center before:content-[''] before:absolute before:inset-0 before:bg-[var(--overlay)]"
+  id='menu'
+  aria-hidden='true'
+>
+  <div
+    class='relative
+    w-[min(1040px,90vw)]
+    p-[clamp(1rem,3vw,2rem)]
+    grid gap-6
+    rounded-[22px]
+    m-auto
+    bg-[linear-gradient(180deg,#0e1621,#0b0f18)]
+    border border-[#2a3b48]
+    shadow-[0_20px_120px_#000c,inset_0_1px_0_#ffffff10]
+    translate-y-[6px] scale-[0.99]
+    transition-transform duration-200 ease-in-out
+    animation-raiseFromCenter'
+    role='dialog'
+    aria-modal='true'
+    aria-labelledby='menuTitle'
+  >
+    <h2 id='menuTitle' class='sr-only'>Menu nawigacji</h2>
+    <div class='grid gap-4'>
+      <a
+        class='text-[clamp(2rem,_5vw,_3.6rem)] font-bold -tracking-tight text-[var(--text-white)] py-2 px-4 rounded-xl border border-solid border-[#334a56] shadow-[var(--glow-green)] bg-[linear-gradient(180deg,#0e1621,#0b0f18)]'
+        href='#about'>/ O&nbsp;mnie</a
+      >
+      <a
+        class='text-[clamp(2rem,_5vw,_3.6rem)] font-bold -tracking-tight text-[var(--text-white)] py-2 px-4 rounded-xl border border-solid border-[#334a56] shadow-[var(--glow-green)] bg-[linear-gradient(180deg,#0e1621,#0b0f18)]'
+        href='#technologies'>/ Technologie</a
+      >
+      <a
+        class='text-[clamp(2rem,_5vw,_3.6rem)] font-bold -tracking-tight text-[var(--text-white)] py-2 px-4 rounded-xl border border-solid border-[#334a56] shadow-[var(--glow-green)] bg-[linear-gradient(180deg,#0e1621,#0b0f18)]'
+        href='#projects'>/ Projekty</a
+      >
+      <a
+        class='text-[clamp(2rem,_5vw,_3.6rem)] font-bold -tracking-tight text-[var(--text-white)] py-2 px-4 rounded-xl border border-solid border-[#334a56] shadow-[var(--glow-green)] bg-[linear-gradient(180deg,#0e1621,#0b0f18)]'
+        href='#contact'>/ Kontakt</a
+      >
+    </div>
+    <div class='flex items-center justify-end gap-4'>
+      <a
+        class='text-[clamp(0.5rem,_1vw,_1.5rem)] font-bold -tracking-tight text-[var(--text-white)] py-2 px-4 rounded-xl border border-solid border-[#334a56] shadow-[var(--glow-muted)] bg-[linear-gradient(180deg,#0e1621,#0b0f18)]'
+        href='https://www.linkedin.com/in/piotr-labiak/'>Linkedin</a
+      >
+      <a
+        class='text-[clamp(0.5rem,_1vw,_1.5rem)] font-bold -tracking-tight text-[var(--text-white)] py-2 px-4 rounded-xl border border-solid border-[#334a56] shadow-[var(--glow-muted)] bg-[linear-gradient(180deg,#0e1621,#0b0f18)]'
+        href='https://github.com/pabiak'>Github</a
+      >
+    </div>
+  </div>
+</nav>
+<button
+  id='hamburger'
+  class='group fixed flex items-center justify-center shadow-[var(--glow-muted)] top-4 right-4 z-10 w-12 h-12 rounded-xl cursor-pointer border border-[var(--primary)] bg-black'
+  aria-label='Otwórz menu'
+  aria-controls='menu'
+  aria-expanded='false'
+>
+  <span
+    id='bars'
+    class="relative block w-7 h-[2px] bg-white rounded transition-transform duration-300
+           before:content-[''] before:absolute before:left-0 before:w-7 before:h-[2px] before:bg-white before:rounded before:transition-all before:duration-300 before:-top-[7px]
+           after:content-[''] after:absolute after:left-0 after:w-7 after:h-[2px] after:bg-white after:rounded after:transition-opacity after:duration-300 after:top-[7px]
+           group-aria-[expanded=true]:rotate-45
+           group-aria-[expanded=true]:before:rotate-90
+           group-aria-[expanded=true]:before:top-0
+           group-aria-[expanded=true]:after:opacity-0"
+  ></span>
+</button>
+
+<script is:inline>
+  const button = document.getElementById('hamburger');
+  const menu = document.getElementById('menu');
+
+  const setOpen = (open) => {
+    menu.classList.toggle('hidden', !open);
+    menu.classList.toggle('grid', open);
+    button.setAttribute('aria-expanded', String(open));
+    menu.setAttribute('aria-hidden', String(!open));
+  };
+
+  const toggleOpen = () => {
+    const expanded = button.getAttribute('aria-expanded') === 'true' || false;
+    setOpen(!expanded);
+  };
+
+  menu.addEventListener('click', (e) => {
+    if (e.target === menu) setOpen(false);
+  });
+
+  menu
+    .querySelectorAll('a[href]')
+    .forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+  button.addEventListener('click', toggleOpen);
+</script>

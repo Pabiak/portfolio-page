@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import PabiakImg from '../assets/pabiak.png';
 import Button from './Button.astro';
 
@@ -9,7 +10,7 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
 ---
 <header
   id='home'
-  class='relative min-h-[92svh] grid items-center overflow-hidden px-[clamp(3rem,_6vw,_6rem)] pt-8'
+  class='relative min-h-[100svh] grid items-center overflow-hidden px-[clamp(3rem,_6vw,_6rem)] pt-8'
 >
   <div class='absolute inset-0 w-full h-full' aria-hidden='true'>
     <canvas class='absolute inset-0 w-full h-full' id='stars-far'></canvas>
@@ -33,7 +34,7 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
         class='text-[var(--muted)] text-[clamp(1.05rem,_1.4vw,_1.2rem)] max-w-[62ch]'
       >
         Frontend Developer z ponad <span>{yearsOfExperience}</span>-letnim doświadczeniem oraz tytułem
-        inżyniera i magistra informatyki. Specjalizuję się w tworzeniu
+        magistra i inżyniera informatyki. Specjalizuję się w tworzeniu
         wydajnych, intuicyjnych i estetycznych aplikacji webowych, łącząc
         solidne podstawy inżynierskie z dbałością o detale interfejsu.
       </p>
@@ -45,7 +46,7 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
     <figure
       class='self-center aspect-square rounded-3xl relative overflow-hidden border-1 border-solid border-[#234233] grid place-items-center shadow-[var(--glow-green)]'
     >
-      <img src={PabiakImg.src} alt='Animowana ikona/portret Piotra' />
+      <Image src={PabiakImg} alt='Animowana ikona/portret Piotra' />
     </figure>
   </div>
 </header>
