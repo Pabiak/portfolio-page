@@ -5,7 +5,7 @@ import Button from './Button.astro';
 
 const raw = await getCollection('projects');
 const projects = raw
-  .sort((a,b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
   .map((p) => {
     const img = p.data.image;
     const imageSrc = img;
@@ -16,91 +16,122 @@ const projects = raw
     return { ...p, data: { ...p.data, imageSrc, imageAlt, live, repository } };
   });
 ---
+<astro:head>
+  {projects.map(p => (
+    <link rel="preload" as="image" href={p.data.imageSrc} />
+  ))}
+</astro:head>
 
 <section
   id='projects'
   class='w-full px-[clamp(3rem,_6vw,_6rem)] my-20 relative w-[min(var(--container), 92vw)] mx-auto py-10'
 >
   <div
-    id="projects-bg"
+    id='projects-bg'
     class='absolute inset-0 bg-center bg-no-repeat bg-cover blur-xl opacity-60 -z-[1]'
     style={`background-image:url('${projects[0]?.data.imageSrc}')`}
-  ></div>
+  >
+  </div>
 
   <div class='flex items-center justify-between'>
-    <h2 class='font-chakra text-[clamp(2rem,_4vw,_3rem)] m-0 -tracking-tight font-bold'>
+    <h2
+      class='font-chakra text-[clamp(2rem,_4vw,_3rem)] m-0 -tracking-tight font-bold'
+    >
       Projekty
     </h2>
     <div class='flex items-center justify-center gap-3'>
       <button
         data-prev
         class='lg:hidden bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer'
-      >←</button>
+        >←</button
+      >
       <button
         data-next
         class='lg:hidden bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer'
-      >→</button>
+        >→</button
+      >
     </div>
   </div>
 
   <!-- Slides -->
- <div
+  <div
     class='relative mx-auto h-[clamp(500px,_60vw,_600px)]
            sm:my-[clamp(1rem,_4vw,_5rem)] my-4
            flex items-center justify-center'
   >
-    {projects.map((p, i) => (
-      <article
-        class={`flex flex-col h-full ${i === 0 ? '' : 'hidden'}`}
-        data-slide-index={i}
-        data-image={p.data.imageSrc}
-        data-aos="fade-left"
-        data-aos-delay="300"
-      >
-        <figure
-          class='rounded-tl-2xl rounded-tr-2xl overflow-hidden grid place-items-center
+    {
+      projects.map((p, i) => (
+        <article
+          class={`flex flex-col h-full ${i === 0 ? '' : 'hidden'}`}
+          data-slide-index={i}
+          data-image={p.data.imageSrc}
+          data-aos='fade-left'
+          data-aos-delay='300'
+        >
+          <figure
+            class='rounded-tl-2xl rounded-tr-2xl overflow-hidden grid place-items-center
                  aspect-[16/12] sm:aspect-[16/10] md:h-[clamp(220px,_48vw,_500px)]
                  border border-solid border-b-0 border-[var(--primary)]'
-        >
-          <Image
-            src={p.data.imageSrc}
-            alt={p.data.imageAlt}
-            width={800}
-            height={600}
-            class='w-full h-full object-center object-fill block'
-          />
-        </figure>
+          >
+            <Image
+              src={p.data.imageSrc}
+              alt={p.data.imageAlt}
+              width={800}
+              height={600}
+              loading='eager'
+              fetchpriority={i === 0 ? 'high' : 'low'}
+              decoding='async'
+              class='w-full h-full object-center object-fill block'
+            />
+          </figure>
 
-        <div
-          class='rounded-bl-2xl rounded-br-2xl overflow-hidden
+          <div
+            class='rounded-bl-2xl rounded-br-2xl overflow-hidden
                  border border-solid border-[var(--primary)] border-t-0
                  bg-[var(--bg-3)] flex flex-col gap-3
                  min-h-[140px] sm:min-h-[200px] md:min-h-[230px] px-4 py-7 lg:p-4'
-        >
-          <h3 class='text-[clamp(1.2rem,_5vw,_2rem)] tracking-wide font-chakra font-bold leading-tight'>
-            {p.data.title}
-          </h3>
+          >
+            <h3 class='text-[clamp(1.2rem,_5vw,_2rem)] tracking-wide font-chakra font-bold leading-tight'>
+              {p.data.title}
+            </h3>
 
-          <p class='text-[clamp(0.9rem,_3.6vw,_1rem)] leading-snug'>
-            {p.data.description}
-          </p>
+            <p class='text-[clamp(0.9rem,_3.6vw,_1rem)] leading-snug'>
+              {p.data.description}
+            </p>
 
-          <div class='flex flex-wrap items-center gap-3 justify-between mt-1'>
-            <div class='flex flex-wrap gap-4'>
-              {p.data.tech?.map((t) => <span class='chip text-xs sm:text-sm'>{t}</span>)}
-            </div>
-            <div class="w-full flex items-center justify-end">
-              {p.data.live &&
-                <Button variant="secondary" href={p.data.live} blank class='max-w-30 !px-4 !py-2 text-sm sm:text-base'>Live</Button>
-              }
-              {p.data.repository &&
-              <Button variant="secondary" href={p.data.repository} blank class='max-w-30 !px-4 !py-2 text-sm sm:text-base'>Github</Button>
-              }
+            <div class='flex flex-wrap items-center gap-3 justify-between mt-1'>
+              <div class='flex flex-wrap gap-4'>
+                {p.data.tech?.map((t) => (
+                  <span class='chip text-xs sm:text-sm'>{t}</span>
+                ))}
+              </div>
+              <div class='w-full flex items-center justify-end'>
+                {p.data.live && (
+                  <Button
+                    variant='secondary'
+                    href={p.data.live}
+                    blank
+                    class='max-w-30 !px-4 !py-2 text-sm sm:text-base'
+                  >
+                    Live
+                  </Button>
+                )}
+                {p.data.repository && (
+                  <Button
+                    variant='secondary'
+                    href={p.data.repository}
+                    blank
+                    class='max-w-30 !px-4 !py-2 text-sm sm:text-base'
+                  >
+                    Github
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </article>
-    ))}
+        </article>
+      ))
+    }
 
     <button
       data-prev
@@ -108,21 +139,34 @@ const projects = raw
              absolute top-1/2 -translate-y-1/2 -left-5
              bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
              w-15 h-15 cursor-pointer text-2xl'
-    >←</button>
+      >←</button
+    >
     <button
       data-next
       class='hidden lg:grid place-items-center
              absolute top-1/2 -translate-y-1/2 -right-5
              bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
              w-15 h-15 cursor-pointer text-2xl'
-    >→</button>
+      >→</button
+    >
   </div>
 </section>
 
 <script is:inline>
   (() => {
-    const slides = Array.from(document.querySelectorAll('#projects [data-slide-index]'));
+    const slides = Array.from(
+      document.querySelectorAll('#projects [data-slide-index]')
+    );
     if (!slides.length) return;
+
+    slides.forEach((slide) => {
+      const src = slide.dataset.image;
+      if (!src) return;
+      const img = new Image();
+      img.decoding = 'async';
+      img.loading = 'eager';
+      img.src = src;
+    });
 
     let slideIndex = 0;
     const background = document.getElementById('projects-bg');
@@ -142,12 +186,16 @@ const projects = raw
       background.style.backgroundImage = `url('${img}')`;
     };
 
-    document.querySelectorAll('#projects [data-prev]').forEach(btn =>
-      btn.addEventListener('click', () => show(slideIndex - 1))
-    );
-    document.querySelectorAll('#projects [data-next]').forEach(btn =>
-      btn.addEventListener('click', () => show(slideIndex + 1))
-    );
+    document
+      .querySelectorAll('#projects [data-prev]')
+      .forEach((btn) =>
+        btn.addEventListener('click', () => show(slideIndex - 1))
+      );
+    document
+      .querySelectorAll('#projects [data-next]')
+      .forEach((btn) =>
+        btn.addEventListener('click', () => show(slideIndex + 1))
+      );
 
     show(0);
   })();

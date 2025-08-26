@@ -19,11 +19,12 @@ import Button from "./Button.astro";
       <p class='text-[var(--muted)] max-w-[70ch] mb-4 text-center'>
          Odezwij się - odpowiadam zwykle w 24h.
       </p>
-      <div class="w-[clamp(20ch,_60vw,_40ch)]">
+      <div class="w-[clamp(20ch,_60vw,_40ch)] flex flex-col gap-4">
         <Button
           href='mailto:info@piotrlabiak.pl?subject=Zapytanie%20o%20wsp%C3%B3%C5%82prac%C4%99'
           >Skontaktuj się ze mną
         </Button>
+        <span class="flex items-center justify-center text-center text-[var(--muted)] text-sm">info@piotrlabiak.pl</span>
       </div>
   </div>
 </section>
