@@ -6,15 +6,29 @@ import '../styles/global.css';
 <html lang='pl'>
   <head>
     <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width' />
+    <meta name='viewport' content='width=device-width, maximum-scale=1.0, user-scalable=no' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-		<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <meta name='generator' content={Astro.generator} />
     <title>Piotr Łabiak - Frontend Developer</title>
   </head>
   <body class='grain'>
     <div class='bg-grid' aria-hidden='true'></div>
     <slot />
+    <script is:inline src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script is:inline>
+      AOS.init({
+        once: true,
+        duration: 600,
+        easing: "ease-out-quart",
+        disable: () => window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      });
+      document.addEventListener("astro:after-swap", () => {
+        AOS.refreshHard();
+      });
+      document.addEventListener("astro:page-load", () => AOS.refresh());
+    </script>
   </body>
 </html>
 
@@ -34,6 +48,7 @@ import '../styles/global.css';
 
   body {
     width: 100%;
+    max-width: 100%;
     font-family: 'Space Grotesk', system-ui, sans-serif;
     line-height: 1.45;
     -webkit-font-smoothing: antialiased;

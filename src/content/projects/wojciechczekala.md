@@ -5,5 +5,5 @@ tech: ["Next.js", "Tailwind",]
 live: "https://wojciechczekala.pl"
 image: "/czekala.jpeg"
 imageAlt: "Zrzut ekranu projektu strony wojciechczekala.pl"
-order: 2
+order: 1
 ---

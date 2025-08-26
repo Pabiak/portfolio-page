@@ -10,7 +10,7 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
 ---
 <header
   id='home'
-  class='relative min-h-[100svh] grid items-center overflow-hidden px-[clamp(3rem,_6vw,_6rem)] pt-8 bg-[var(--bg)]'
+  class='relative min-h-[100svh] grid items-center overflow-hidden px-[clamp(3rem,_6vw,_6rem)] py-8 bg-[var(--bg)]'
 >
   <div class='absolute inset-0 w-full h-full' aria-hidden='true'>
     <canvas class='absolute inset-0 w-full h-full' id='stars-far'></canvas>
@@ -20,7 +20,7 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
   <div
     class='w-full max-w-[var(--container)] mx-auto relative grid grid-cols-1 md:[grid-template-columns:1.3fr_1fr] gap-[clamp(2rem,_5vw,_5rem)]'
   >
-    <div class='pl-2'>
+    <div class='pl-2' data-aos="fade-right" data-aos-delay="200">
       <div class='chip mb-2'>Frontend Developer • UI tinkerer</div>
       <h1
         class='font-bold font-chakra text-[clamp(2.4rem,_5.6vw,_4.8rem)] leading-none tracking-widest m-0 mb-4 [text-shadow:0_0_20px_#0c3,0_0_60px_#0c3a]'
@@ -44,6 +44,8 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
       </div>
     </div>
     <figure
+      data-aos="fade-left"
+      data-aos-delay="200"
       class='self-center aspect-square rounded-3xl relative overflow-hidden border-1 border-solid border-[#234233] grid place-items-center shadow-[var(--glow-green)]'
     >
       <Image src={PabiakImg} alt='Animowana ikona/portret Piotra' />

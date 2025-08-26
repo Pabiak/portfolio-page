@@ -1,6 +1,8 @@
 <section
   id='about'
   class='w-full px-[clamp(3rem,_6vw,_6rem)] my-10 relative w-[min(var(--container), 92vw)] mx-auto'
+  data-aos="fade-up"
+  data-aos-delay="200"
 >
   <h2
     class='font-chakra text-[clamp(2rem,_4vw,_3rem)] m-0 mb-5 -tracking-tight font-bold'
@@ -11,7 +13,7 @@
     Inżynier oprogramowania, który łączy pasję do technologii z dbałością o
     detale.
   </p>
-  <div class='panel p-10 text-justify space-y-4'>
+  <div class='panel p-10 text-justify space-y-4 text-pretty hyphens-auto'>
     <p>
       Jestem frontend developerem z doświadczeniem w tworzeniu aplikacji webowych, które łączą wydajność, intuicyjność i estetykę. Potrafię zadbać zarówno o stronę wizualną, jak i techniczną projektu, dzięki czemu dostarczam rozwiązania, które są nie tylko atrakcyjne, ale też skalowalne i niezawodne.
     </p>
@@ -27,3 +29,19 @@
     </p>
   </div>
 </section>
+
+<script is:inline>
+  function fixWidows(selector) {
+  const container = document.querySelector(selector);
+  if (!container) return;
+  container.innerHTML = container.innerHTML.replace(
+    /(\s)([aiouwz]|na)(\s)/gi,
+    (match, spaceBefore, word, spaceAfter) =>
+      `${spaceBefore}${word}&nbsp;`
+  );
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  fixWidows(".panel");
+});
+</script>

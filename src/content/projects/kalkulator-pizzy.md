@@ -5,5 +5,5 @@ tech: ["React", "TypeScript", "Tailwind"]
 repository: "https://github.com/Pabiak/pizza-dough-calculator"
 image: "/kalkulator-pizzy.png"
 imageAlt: "Zrzut ekranu aplikacji kalkulator pizzy"
-order: 6
+order: 8
 ---

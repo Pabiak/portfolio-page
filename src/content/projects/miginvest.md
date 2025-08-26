@@ -5,5 +5,5 @@ tech: ["Wordpress"]
 live: "https://mig-invest.com"
 image: "/miginvest.png"
 imageAlt: "Zrzut ekranu strony mig-invest"
-order: 5
+order: 3
 ---

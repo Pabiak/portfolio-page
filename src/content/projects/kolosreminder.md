@@ -5,5 +5,5 @@ tech: ["Java", "Springboot"]
 repository: "https://github.com/Pabiak/KolosReminder"
 image: "/kolosreminder.png"
 imageAlt: "Zrzut ekranu aplikacji kolos reminder"
-order: 8
+order: 9
 ---
