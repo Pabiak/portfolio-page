@@ -8,17 +8,17 @@ const projects = raw
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
   .map((p) => {
     const img = p.data.image;
-    const imageSrc = img;
+    const image = img;
     const imageAlt = p.data.imageAlt ?? '';
     const live = p.data.live ?? null;
     const repository = p.data.repository ?? null;
 
-    return { ...p, data: { ...p.data, imageSrc, imageAlt, live, repository } };
+    return { ...p, data: { ...p.data, image, imageAlt, live, repository } };
   });
 ---
 <astro:head>
   {projects.map(p => (
-    <link rel="preload" as="image" href={p.data.imageSrc} />
+    <link rel="preload" as="image" href={p.data.image} />
   ))}
 </astro:head>
 
@@ -29,7 +29,7 @@ const projects = raw
   <div
     id='projects-bg'
     class='absolute inset-0 bg-center bg-no-repeat bg-cover blur-xl opacity-60 -z-[1]'
-    style={`background-image:url('${projects[0]?.data.imageSrc}')`}
+    style={`background-image:url('${projects[0]?.data.image.src}')`}
   >
   </div>
 
@@ -64,7 +64,7 @@ const projects = raw
         <article
           class={`flex flex-col h-full ${i === 0 ? '' : 'hidden'}`}
           data-slide-index={i}
-          data-image={p.data.imageSrc}
+          data-image={p.data.image.src}
           data-aos='fade-left'
           data-aos-delay='300'
         >
@@ -74,10 +74,10 @@ const projects = raw
                  border border-solid border-b-0 border-[var(--primary)]'
           >
             <Image
-              src={p.data.imageSrc}
+              src={p.data.image}
               alt={p.data.imageAlt}
-              width={800}
-              height={600}
+              width={p.data.image.width}
+              height={p.data.image.height}
               loading='eager'
               fetchpriority={i === 0 ? 'high' : 'low'}
               decoding='async'

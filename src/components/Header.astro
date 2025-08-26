@@ -1,13 +1,19 @@
 ---
 import { Image } from 'astro:assets';
-import PabiakImg from '../assets/pabiak.png';
+import PabiakImg from '../assets/pabiak.webp';
 import Button from './Button.astro';
 
-const startDate = new Date("2023-05-01");
+const startDate = new Date('2023-05-01');
 const today = new Date();
-const yearsOfExperience = today.getFullYear() - startDate.getFullYear() - 
-  (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
+const yearsOfExperience =
+  today.getFullYear() -
+  startDate.getFullYear() -
+  (today <
+  new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate())
+    ? 1
+    : 0);
 ---
+
 <header
   id='home'
   class='relative min-h-[100svh] grid items-center overflow-hidden px-[clamp(3rem,_6vw,_6rem)] py-8 bg-[var(--bg)]'
@@ -20,7 +26,7 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
   <div
     class='w-full max-w-[var(--container)] mx-auto relative grid grid-cols-1 md:[grid-template-columns:1.3fr_1fr] gap-[clamp(2rem,_5vw,_5rem)]'
   >
-    <div class='pl-2' data-aos="fade-right" data-aos-delay="200">
+    <div class='pl-2' data-aos='fade-right' data-aos-delay='200'>
       <div class='chip mb-2'>Frontend Developer • UI tinkerer</div>
       <h1
         class='font-bold font-chakra text-[clamp(2.4rem,_5.6vw,_4.8rem)] leading-none tracking-widest m-0 mb-4 [text-shadow:0_0_20px_#0c3,0_0_60px_#0c3a]'
@@ -33,10 +39,11 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
       <p
         class='text-[var(--muted)] text-[clamp(1.05rem,_1.4vw,_1.2rem)] max-w-[62ch]'
       >
-        Frontend Developer z ponad <span>{yearsOfExperience}</span>-letnim doświadczeniem oraz tytułem
-        magistra i inżyniera informatyki. Specjalizuję się w tworzeniu
-        wydajnych, intuicyjnych i estetycznych aplikacji webowych, łącząc
-        solidne podstawy inżynierskie z dbałością o detale interfejsu.
+        Frontend Developer z ponad <span>{yearsOfExperience}</span>-letnim
+        doświadczeniem oraz tytułem magistra i inżyniera informatyki.
+        Specjalizuję się w tworzeniu wydajnych, intuicyjnych i estetycznych
+        aplikacji webowych, łącząc solidne podstawy inżynierskie z dbałością o
+        detale interfejsu.
       </p>
       <div class='flex gap-4 mt-6 w-full flex-col lg:flex-row'>
         <Button href='#projects'>Zobacz projekty</Button>
@@ -44,8 +51,8 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
       </div>
     </div>
     <figure
-      data-aos="fade-left"
-      data-aos-delay="200"
+      data-aos='fade-left'
+      data-aos-delay='200'
       class='self-center aspect-square rounded-3xl relative overflow-hidden border-1 border-solid border-[#234233] grid place-items-center shadow-[var(--glow-green)]'
     >
       <Image src={PabiakImg} alt='Animowana ikona/portret Piotra' />
@@ -59,79 +66,82 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
       id: 'stars-far',
       count: 120,
       size: [1, 2],
-      scroll: 0.12,
-      drift: 6,
+      drift: 12,
       color: 'rgba(200,255,235,0.45)',
     },
     {
       id: 'stars-mid',
       count: 90,
       size: [1.5, 2.5],
-      scroll: 0.24,
-      drift: 12,
+      drift: 20,
       color: 'rgba(160,255,215,0.70)',
     },
     {
       id: 'stars-near',
       count: 70,
       size: [2, 3.2],
-      scroll: 0.4,
-      drift: 20,
+      drift: 32,
       color: 'rgba(80,255,180,0.90)',
     },
   ];
 
   const header = document.getElementById('home');
-  let yScroll = 0;
-
   const rand = (min, max) => Math.random() * (max - min) + min;
 
-  const initLayer = (layer) => {
-    const canvas = document.getElementById(layer.id);
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
-    const { width, height } = header.getBoundingClientRect();
-
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    canvas.style.width = width + 'px';
-    canvas.style.height = height + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    layer.ctx = ctx;
-    layer.width = width;
-    layer.height = height;
+  const ensureStars = (layer) => {
+    if (layer.stars) return;
     layer.stars = Array.from({ length: layer.count }, () => ({
-      x: rand(0, width),
-      y: rand(0, height),
+      u: Math.random(),
+      v: Math.random(),
       r: rand(layer.size[0], layer.size[1]),
       a: Math.random() * Math.PI * 2,
       tw: rand(0.6, 1.2),
     }));
   };
 
+  const resizeLayer = (layer) => {
+    const canvas = document.getElementById(layer.id);
+    if (!canvas || !header) return;
+
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const { width, height } = header.getBoundingClientRect();
+
+    canvas.width = Math.max(1, Math.floor(width * dpr));
+    canvas.height = Math.max(1, Math.floor(height * dpr));
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    layer.ctx = ctx;
+    layer.width = width;
+    layer.height = height;
+
+    ensureStars(layer);
+  };
+
   const drawLayer = (layer, t) => {
     if (!layer.ctx) return;
+    const { ctx, width, height, stars, color, drift } = layer;
 
-    const { ctx, width, height, stars, color, scroll, drift } = layer;
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = color;
 
-    const offsetY = (yScroll * scroll + t * drift) % height;
+    const offsetY = (t * drift) % height;
 
-    stars.forEach((s) => {
-      const y = (s.y + offsetY) % height;
+    for (const s of stars) {
+      const x = s.u * width;
+      const y = (s.v * height + offsetY) % height;
       const tw = 0.85 + 0.15 * Math.sin(t * 1.2 * s.tw + s.a);
       ctx.beginPath();
-      ctx.arc(s.x, y, s.r * tw, 0, Math.PI * 2);
+      ctx.arc(x, y, s.r * tw, 0, Math.PI * 2);
       ctx.fill();
-    });
+    }
   };
 
   const resizeAll = () => {
-    STAR_LAYERS.forEach(initLayer);
+    STAR_LAYERS.forEach(resizeLayer);
   };
 
   const animate = (time) => {
@@ -141,13 +151,5 @@ const yearsOfExperience = today.getFullYear() - startDate.getFullYear() -
   };
 
   resizeAll();
-  window.addEventListener('resize', resizeAll, { passive: true });
-  window.addEventListener(
-    'scroll',
-    () => {
-      yScroll = window.scrollY || 0;
-    },
-    { passive: true }
-  );
   requestAnimationFrame(animate);
 </script>
