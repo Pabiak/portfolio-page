@@ -1,0 +1,151 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Button from './Button.astro';
+
+const raw = await getCollection('projects');
+const projects = raw
+  .sort((a,b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((p) => {
+    const img = p.data.image;
+    const imageSrc = img;
+    const imageAlt = p.data.imageAlt ?? '';
+    const live = p.data.live ?? null;
+    const repository = p.data.repository ?? null;
+
+    return { ...p, data: { ...p.data, imageSrc, imageAlt, live, repository } };
+  });
+---
+
+<section
+  id='projects'
+  class='w-full px-[clamp(3rem,_6vw,_6rem)] my-20 relative w-[min(var(--container), 92vw)] mx-auto py-10'
+>
+  <div
+    id="projects-bg"
+    class='absolute inset-0 bg-center bg-no-repeat bg-cover blur-xl scale-110 opacity-60 -z-[1]'
+    style={`background-image:url('${projects[0]?.data.imageSrc}')`}
+  ></div>
+
+  <div class='flex items-center justify-between'>
+    <h2 class='font-chakra text-[clamp(2rem,_4vw,_3rem)] m-0 -tracking-tight font-bold'>
+      Projekty
+    </h2>
+    <div class='flex items-center justify-center gap-3'>
+      <button
+        data-prev
+        class='lg:hidden bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer'
+      >&lt;</button>
+      <button
+        data-next
+        class='lg:hidden bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer'
+      >&gt;</button>
+    </div>
+  </div>
+
+  <!-- Slides -->
+  <div
+    class='relative mx-auto h-[clamp(500px,_65vw,_680px)]
+           sm:my-[clamp(1rem,_4vw,_5rem)] my-4
+           flex items-center justify-center'
+  >
+    {projects.map((p, i) => (
+      <article
+        class={`flex flex-col h-full ${i === 0 ? '' : 'hidden'}`}
+        data-slide-index={i}
+        data-image={p.data.imageSrc}
+      >
+        <figure
+          class='rounded-tl-2xl rounded-tr-2xl overflow-hidden grid place-items-center
+                 aspect-[16/12] sm:aspect-[16/10] md:h-[clamp(220px,_48vw,_500px)]
+                 border border-solid border-b-0 border-[var(--primary)]'
+        >
+          <Image
+            src={p.data.imageSrc}
+            alt={p.data.imageAlt}
+            width={800}
+            height={600}
+            class='w-full h-full object-center object-fill block'
+          />
+        </figure>
+
+        <div
+          class='rounded-bl-2xl rounded-br-2xl overflow-hidden
+                 border border-solid border-[var(--primary)] border-t-0
+                 bg-[var(--bg-3)] flex flex-col gap-3 p-4
+                 min-h-[140px] sm:min-h-[160px]'
+        >
+          <h3 class='text-[clamp(1.2rem,_5vw,_2rem)] tracking-wide font-chakra font-bold leading-tight'>
+            {p.data.title}
+          </h3>
+
+          <p class='text-[clamp(0.9rem,_3.6vw,_1rem)] leading-snug'>
+            {p.data.description}
+          </p>
+
+          <div class='flex flex-wrap items-center gap-3 sm:justify-between mt-1'>
+            <div class='flex flex-wrap gap-4'>
+              {p.data.tech?.map((t) => <span class='chip text-xs sm:text-sm'>{t}</span>)}
+            </div>
+            {p.data.live &&
+              <Button variant="secondary" href={p.data.live} blank class='max-w-30 !px-4 !py-2 text-sm sm:text-base'>Live</Button>
+            }
+            {p.data.repository &&
+             <Button variant="secondary" href={p.data.repository} blank class='max-w-30 !px-4 !py-2 text-sm sm:text-base'>Github</Button>
+            }
+          </div>
+        </div>
+      </article>
+    ))}
+
+    <!-- duże strzałki przypięte do wrappera slidera -->
+    <button
+      data-prev
+      class='hidden lg:grid place-items-center
+             absolute top-1/2 -translate-y-1/2 -left-5
+             bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
+             w-15 h-15 cursor-pointer'
+    >&lt;</button>
+    <button
+      data-next
+      class='hidden lg:grid place-items-center
+             absolute top-1/2 -translate-y-1/2 -right-5
+             bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
+             w-15 h-15 cursor-pointer'
+    >&gt;</button>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const slides = Array.from(document.querySelectorAll('#projects [data-slide-index]'));
+    if (!slides.length) return;
+
+    let slideIndex = 0;
+    const background = document.getElementById('projects-bg');
+    const show = (idx) => {
+      slideIndex = (idx + slides.length) % slides.length;
+
+      slides.forEach((slide, index) => {
+        if (index === slideIndex) {
+          slide.classList.remove('hidden');
+        } else {
+          slide.classList.add('hidden');
+        }
+      });
+
+      if (!background) return;
+      const img = slides[slideIndex].dataset.image;
+      background.style.backgroundImage = `url('${img}')`;
+    };
+
+    document.querySelectorAll('#projects [data-prev]').forEach(btn =>
+      btn.addEventListener('click', () => show(slideIndex - 1))
+    );
+    document.querySelectorAll('#projects [data-next]').forEach(btn =>
+      btn.addEventListener('click', () => show(slideIndex + 1))
+    );
+
+    show(0);
+  })();
+</script>
