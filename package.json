@@ -2,6 +2,10 @@
   "name": "piotrlabiak.pl",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": "20.x"
+  },
+  "packageManager": "pnpm@8.7.6",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -10,8 +14,9 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
+    "aos": "^2.3.4",
     "astro": "^5.12.9",
-    "tailwindcss": "^4.1.11",
-    "aos": "^2.3.4"
+    "sharp": "^0.34.3",
+    "tailwindcss": "^4.1.11"
   }
 }
