@@ -18,7 +18,7 @@ const projects = raw
 ---
 <astro:head>
   {projects.map(p => (
-    <link rel="preload" as="image" href={p.data.image} />
+    <link rel="preload" as="image" href={p.data.image.src} />
   ))}
 </astro:head>
 
@@ -42,12 +42,12 @@ const projects = raw
     <div class='flex items-center justify-center gap-3'>
       <button
         data-prev
-        class='lg:hidden bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer'
+        class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer'
         >←</button
       >
       <button
         data-next
-        class='lg:hidden bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer'
+        class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer'
         >→</button
       >
     </div>
@@ -137,7 +137,7 @@ const projects = raw
       data-prev
       class='hidden lg:grid place-items-center
              absolute top-1/2 -translate-y-1/2 -left-5
-             bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
+             bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
              w-15 h-15 cursor-pointer text-2xl'
       >←</button
     >
@@ -145,7 +145,7 @@ const projects = raw
       data-next
       class='hidden lg:grid place-items-center
              absolute top-1/2 -translate-y-1/2 -right-5
-             bg-black rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
+             bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
              w-15 h-15 cursor-pointer text-2xl'
       >→</button
     >
