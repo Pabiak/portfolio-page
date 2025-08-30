@@ -1,24 +1,34 @@
 ---
-import { Icon } from "astro-icon/components";
+import { Icon } from 'astro-icon/components';
 ---
 
-<button id="scroll-to-top" class="flex items-center justify-center w-15 h-15 rounded-full bg-[var(--bg)] border border-[var(--primary)] text-white shadow-[var(--glow-muted)] fixed bottom-5 right-5 cursor-pointer tansition-all duration-300 hover:scale-105 opacity-0 pointer-events-none">
-  <Icon name="tabler:arrow-up" class="w-7 h-7" />
+<button
+  name='scrollToTop'
+  id='scroll-to-top'
+  aria-label='Scroll to top'
+  class='flex items-center justify-center w-15 h-15 rounded-full bg-[var(--bg)] border border-[var(--primary)] text-white shadow-[var(--glow-muted)] fixed bottom-5 right-5 cursor-pointer tansition-all duration-300 hover:scale-105 opacity-0 pointer-events-none'
+>
+  <span class='sr-only'>Scroll to top</span>
+  <Icon name='tabler:arrow-up' class='w-7 h-7' />
 </button>
 
 <script is:inline>
   const scrollToTopButton = document.getElementById('scroll-to-top');
   const homeSection = document.getElementById('home');
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const passedAbout = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const passedAbout =
+          !entry.isIntersecting && entry.boundingClientRect.top < 0;
 
-  scrollToTopButton.classList.toggle('opacity-100', passedAbout);
-  scrollToTopButton.classList.toggle('opacity-0', !passedAbout);
-  scrollToTopButton.classList.toggle('pointer-events-none', !passedAbout);
-    });
-  }, { threshold: 0 });
+        scrollToTopButton.classList.toggle('opacity-100', passedAbout);
+        scrollToTopButton.classList.toggle('opacity-0', !passedAbout);
+        scrollToTopButton.classList.toggle('pointer-events-none', !passedAbout);
+      });
+    },
+    { threshold: 0 }
+  );
 
   observer.observe(homeSection);
 
