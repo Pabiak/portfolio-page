@@ -4,6 +4,8 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
+import icon from 'astro-icon';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://piotrlabiak.pl',
@@ -13,5 +15,13 @@ export default defineConfig({
     ],
   },
 
-  integrations: [sitemap()],
+  integrations: [sitemap(), icon({
+    include: {
+      tabler: [
+        'arrow-right',
+        'arrow-left',
+        'arrow-up'
+      ]
+    }
+  })],
 });

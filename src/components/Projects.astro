@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Button from './Button.astro';
+import { Icon } from 'astro-icon/components';
 
 const raw = await getCollection('projects');
 const projects = raw
@@ -16,11 +17,6 @@ const projects = raw
     return { ...p, data: { ...p.data, image, imageAlt, live, repository } };
   });
 ---
-<astro:head>
-  {projects.map(p => (
-    <link rel="preload" as="image" href={p.data.image.src} />
-  ))}
-</astro:head>
 
 <section
   id='projects'
@@ -42,13 +38,13 @@ const projects = raw
     <div class='flex items-center justify-center gap-3'>
       <button
         data-prev
-        class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer'
-        >←</button
+        class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer flex items-center justify-center'
+        ><Icon name='tabler:arrow-left' class='w-5 h-5' /></button
       >
       <button
         data-next
-        class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer'
-        >→</button
+        class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer flex items-center justify-center'
+        ><Icon name='tabler:arrow-right' class='w-5 h-5' /></button
       >
     </div>
   </div>
@@ -78,8 +74,8 @@ const projects = raw
               alt={p.data.imageAlt}
               width={p.data.image.width}
               height={p.data.image.height}
-              loading='eager'
-              fetchpriority={i === 0 ? 'high' : 'low'}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : 'auto'}
               decoding='async'
               class='w-full h-full object-center object-fill block'
             />
@@ -139,7 +135,7 @@ const projects = raw
              absolute top-1/2 -translate-y-1/2 -left-5
              bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
              w-15 h-15 cursor-pointer text-2xl'
-      >←</button
+      ><Icon name='tabler:arrow-left' class='w-5 h-5' /></button
     >
     <button
       data-next
@@ -147,7 +143,7 @@ const projects = raw
              absolute top-1/2 -translate-y-1/2 -right-5
              bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
              w-15 h-15 cursor-pointer text-2xl'
-      >→</button
+      ><Icon name='tabler:arrow-right' class='w-5 h-5' /></button
     >
   </div>
 </section>
@@ -159,43 +155,48 @@ const projects = raw
     );
     if (!slides.length) return;
 
-    slides.forEach((slide) => {
-      const src = slide.dataset.image;
-      if (!src) return;
-      const img = new Image();
-      img.decoding = 'async';
-      img.loading = 'eager';
-      img.src = src;
-    });
+    const bg = document.getElementById('projects-bg');
 
-    let slideIndex = 0;
-    const background = document.getElementById('projects-bg');
-    const show = (idx) => {
-      slideIndex = (idx + slides.length) % slides.length;
+    const pickURL = (img) => img.currentSrc || img.src || '';
 
-      slides.forEach((slide, index) => {
-        if (index === slideIndex) {
-          slide.classList.remove('hidden');
-        } else {
-          slide.classList.add('hidden');
-        }
+    const setBGFromImg = (img) => {
+      const url = pickURL(img);
+      if (!url || url.startsWith('data:')) return false;
+      bg.style.backgroundImage = `url("${url}")`;
+      return true;
+    };
+
+    const firstImg = slides[0].querySelector('img');
+    if (!setBGFromImg(firstImg)) {
+      firstImg.addEventListener('load', () => setBGFromImg(firstImg), {
+        once: true,
       });
+      firstImg.loading = 'eager';
+      firstImg.fetchPriority = 'high';
+    }
 
-      if (!background) return;
-      const img = slides[slideIndex].dataset.image;
-      background.style.backgroundImage = `url('${img}')`;
+    let idx = 0;
+
+    const show = (next) => {
+      idx = (next + slides.length) % slides.length;
+
+      slides.forEach((s, i) => s.classList.toggle('hidden', i !== idx));
+
+      const img = slides[idx].querySelector('img');
+
+      if (setBGFromImg(img)) return;
+
+      img.loading = 'eager';
+      img.fetchPriority = 'high';
+      img.addEventListener('load', () => setBGFromImg(img), { once: true });
     };
 
     document
       .querySelectorAll('#projects [data-prev]')
-      .forEach((btn) =>
-        btn.addEventListener('click', () => show(slideIndex - 1))
-      );
+      .forEach((b) => b.addEventListener('click', () => show(idx - 1)));
     document
       .querySelectorAll('#projects [data-next]')
-      .forEach((btn) =>
-        btn.addEventListener('click', () => show(slideIndex + 1))
-      );
+      .forEach((b) => b.addEventListener('click', () => show(idx + 1)));
 
     show(0);
   })();
