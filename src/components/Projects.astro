@@ -106,6 +106,7 @@ const projects = raw
               <div class='w-full flex items-center justify-end'>
                 {p.data.live && (
                   <Button
+                    name={`live-${p.data.title.replace(/\s+/g, '-').toLowerCase()}`}
                     variant='secondary'
                     href={p.data.live}
                     blank
@@ -116,6 +117,7 @@ const projects = raw
                 )}
                 {p.data.repository && (
                   <Button
+                    name={`repo-${p.data.title.replace(/\s+/g, '-').toLowerCase()}`}
                     variant='secondary'
                     href={p.data.repository}
                     blank

@@ -1,5 +1,6 @@
 ---
-interface IButtonProps{
+interface IButtonProps {
+  name?: string;
   variant?: 'primary' | 'secondary';
   href?: string;
   class?: string;
@@ -7,7 +8,7 @@ interface IButtonProps{
   blank?: boolean;
 }
 
-const { variant = 'primary', href, class: className, type = 'button', blank = false }: IButtonProps = Astro.props;
+const { name, variant = 'primary', href, class: className, type = 'button', blank = false }: IButtonProps = Astro.props;
 
 const baseClass = 'cursor-pointer w-full inline-flex gap-2 items-center justify-center px-5 py-4 rounded-[14px] no-underline text-[var(--text)] font-extrabold tracking-[0.02em] bg-gradient-to-br from-[#0b1f17] to-[#0f0b19] border border-[#24353f] transition-transform transition-shadow transition-colors duration-200 shadow-[var(--glow-green)] hover:-translate-y-[1px] hover:shadow-[var(--glow-violet)] hover:bg-gradient-to-br hover:from-[#0e2b21] hover:to-[#150d22]';
 
@@ -24,11 +25,11 @@ const classes = `${baseClass} ${variantClasses[variant]} ${sizeClasses} ${classN
 ---
 
 {href ? (
-  <a href={href} class={classes} target={blank ? '_blank' : '_self'} rel={blank ? 'noopener noreferrer' : undefined}>
+  <a name={name} href={href} class={classes} target={blank ? '_blank' : '_self'} rel={blank ? 'noopener noreferrer' : undefined}>
     <slot />
   </a>
 ) : (
-  <button type={type} class={classes}>
+  <button name={name} {type} class={classes}>
     <slot />
   </button>
 )}
