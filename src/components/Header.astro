@@ -2,16 +2,6 @@
 import { Image } from 'astro:assets';
 import PabiakImg from '../assets/pabiak.webp';
 import Button from './Button.astro';
-
-const startDate = new Date('2023-05-01');
-const today = new Date();
-const yearsOfExperience =
-  today.getFullYear() -
-  startDate.getFullYear() -
-  (today <
-  new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate())
-    ? 1
-    : 0);
 ---
 
 <header
@@ -39,8 +29,6 @@ const yearsOfExperience =
       <p
         class='text-[var(--muted)] text-[clamp(1.05rem,_1.4vw,_1.2rem)] max-w-[62ch]'
       >
-        Frontend Developer z ponad <span>{yearsOfExperience}</span>-letnim
-        doświadczeniem oraz tytułem magistra i inżyniera informatyki.
         Specjalizuję się w tworzeniu wydajnych, intuicyjnych i estetycznych
         aplikacji webowych, łącząc solidne podstawy inżynierskie z dbałością o
         detale interfejsu.
