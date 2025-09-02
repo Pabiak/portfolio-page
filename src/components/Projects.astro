@@ -38,12 +38,14 @@ const projects = raw
     <div class='flex items-center justify-center gap-3'>
       <button
         name="mobile-nav-prev"
+        aria-label="Previous project"
         data-prev
         class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer flex items-center justify-center'
         ><Icon name='tabler:arrow-left' class='w-5 h-5' /></button
       >
       <button
         name="mobile-nav-next"
+        aria-label="Next project"
         data-next
         class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer flex items-center justify-center'
         ><Icon name='tabler:arrow-right' class='w-5 h-5' /></button
@@ -135,6 +137,7 @@ const projects = raw
 
     <button
       name="desktop-nav-prev"
+      aria-label="Previous project"
       data-prev
       class='hidden lg:grid place-items-center
              absolute top-1/2 -translate-y-1/2 -left-5
@@ -144,6 +147,7 @@ const projects = raw
     >
     <button
       name="desktop-nav-next"
+      aria-label="Next project"
       data-next
       class='hidden lg:grid place-items-center
              absolute top-1/2 -translate-y-1/2 -right-5
