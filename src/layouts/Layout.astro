@@ -3,62 +3,100 @@ import '../styles/global.css';
 ---
 
 <!doctype html>
-<html lang='pl'>
+<html lang="pl">
   <head>
-    <meta charset='UTF-8' />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
-      name='description'
-      content='Portfolio Piotra Łabiaka - Frontend Developer. Tworzę nowoczesne, responsywne strony internetowe i aplikacje webowe.'
+      name="description"
+      content="Portfolio Piotra Łabiaka - Frontend Developer. Tworzę nowoczesne, responsywne strony internetowe i aplikacje webowe."
     />
-    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-    <link rel='preconnect' href='https://fonts.googleapis.com' />
-    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-    <link
-      href='https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap'
-      rel='stylesheet'
-    />
-    <link rel='stylesheet' href='https://unpkg.com/aos@next/dist/aos.css' />
-    <link rel='canonical' href='https://piotrlabiak.pl/' />
-    <link rel='sitemap' href='/sitemap-index.xml' />
-    <meta name='generator' content={Astro.generator} />
-    <meta property='og:type' content='website' />
-    <meta property='og:locale' content='pl_PL' />
-    <meta property='og:title' content='Piotr Łabiak – Frontend Developer' />
-    <meta
-      property='og:description'
-      content='Tworzę nowoczesne, responsywne strony i aplikacje webowe.'
-    />
-    <meta property='og:url' content='https://piotrlabiak.pl/' />
-    <meta property='og:image' content='https://piotrlabiak.pl/og-image.jpg' />
-    <meta property='og:image:width' content='1200' />
-    <meta property='og:image:height' content='630' />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <meta name='twitter:card' content='summary_large_image' />
-    <meta name='twitter:title' content='Piotr Łabiak – Frontend Developer' />
-    <meta
-      name='twitter:description'
-      content='Tworzę nowoczesne, responsywne strony i aplikacje webowe.'
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap"
     />
-    <meta name='twitter:image' content='https://piotrlabiak.pl/og-image.jpg' />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap"
+      />
+    </noscript>
+
+    <link
+      rel="preload"
+      as="style"
+      href="https://unpkg.com/aos@next/dist/aos.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/aos@next/dist/aos.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/aos@next/dist/aos.css"
+      />
+    </noscript>
+
+    <link rel="canonical" href="https://piotrlabiak.pl/" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:title" content="Piotr Łabiak – Frontend Developer" />
+    <meta
+      property="og:description"
+      content="Tworzę nowoczesne, responsywne strony i aplikacje webowe."
+    />
+    <meta property="og:url" content="https://piotrlabiak.pl/" />
+    <meta property="og:image" content="https://piotrlabiak.pl/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Piotr Łabiak – Frontend Developer" />
+    <meta
+      name="twitter:description"
+      content="Tworzę nowoczesne, responsywne strony internetowe i aplikacje webowe."
+    />
+    <meta
+      name="twitter:image"
+      content="https://piotrlabiak.pl/og-image.jpg"
+    />
+
     <title>Piotr Łabiak - Frontend Developer</title>
   </head>
-  <body class='grain'>
-    <div class='bg-grid' aria-hidden='true'></div>
+  <body class="grain">
+    <div class="bg-grid" aria-hidden="true"></div>
     <slot />
-    <script is:inline src='https://unpkg.com/aos@next/dist/aos.js'></script>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
     <script is:inline>
-      AOS.init({
-        once: true,
-        duration: 600,
-        easing: 'ease-out-quart',
-        disable: () =>
-          window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      document.addEventListener("DOMContentLoaded", () => {
+        AOS.init({
+          once: true,
+          duration: 600,
+          easing: "ease-out-quart",
+          disable: () =>
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+        });
+
+        document.addEventListener("astro:after-swap", () => AOS.refreshHard());
+        document.addEventListener("astro:page-load", () => AOS.refresh());
       });
-      document.addEventListener('astro:after-swap', () => {
-        AOS.refreshHard();
-      });
-      document.addEventListener('astro:page-load', () => AOS.refresh());
     </script>
   </body>
 </html>
@@ -81,7 +119,7 @@ import '../styles/global.css';
   body {
     width: 100%;
     max-width: 100%;
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: "Space Grotesk", system-ui, sans-serif;
     line-height: 1.45;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -89,7 +127,7 @@ import '../styles/global.css';
   }
 
   .grain::before {
-    content: '';
+    content: "";
     position: fixed;
     inset: -20vmax;
     z-index: -2;
