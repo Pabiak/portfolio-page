@@ -43,7 +43,13 @@ import Button from './Button.astro';
       data-aos-delay='200'
       class='self-center aspect-square rounded-3xl relative overflow-hidden border-1 border-solid border-[#234233] grid place-items-center shadow-[var(--glow-green)]'
     >
-      <Image src={PabiakImg} alt='Animowana ikona/portret Piotra' widths={[150, 300, 600]} sizes="(max-width: 768px) 150px, 300px" format='webp'/>
+      <Image 
+        src={PabiakImg} 
+        alt="Animowana ikona/portret Piotra" 
+        widths={[150, 300, 600, 900]} 
+        sizes="(max-width: 768px) 150px, (max-width: 1200px) 300px, 600px"
+        format="webp"
+      />
     </figure>
   </div>
 </header>
