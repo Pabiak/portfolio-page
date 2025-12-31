@@ -13,10 +13,21 @@ const projects = raw
     const imageAlt = p.data.imageAlt ?? '';
     const live = p.data.live ?? null;
     const repository = p.data.repository ?? null;
-
     return { ...p, data: { ...p.data, image, imageAlt, live, repository } };
   });
 ---
+
+<link
+  rel='stylesheet'
+  href='https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'
+/>
+<style>
+  .swiper-slide {
+    height: auto;
+    display: flex;
+    justify-content: center;
+  }
+</style>
 
 <section
   id='projects'
@@ -24,190 +35,190 @@ const projects = raw
 >
   <div
     id='projects-bg'
-    class='absolute inset-0 bg-center bg-no-repeat bg-cover blur-xl opacity-60 -z-[1]'
+    class='absolute inset-0 bg-center bg-no-repeat bg-cover blur-xl opacity-60 -z-[1] transition-all duration-700 ease-in-out'
     style={`background-image:url('${projects[0]?.data.image.src}')`}
   >
   </div>
 
-  <div class='flex items-center justify-between'>
+  <div class='flex items-center justify-between mb-4 sm:mb-8'>
     <h2
       class='font-chakra text-[clamp(2rem,_4vw,_3rem)] m-0 -tracking-tight font-bold'
     >
       Projekty
     </h2>
+
     <div class='flex items-center justify-center gap-3'>
       <button
-        name="mobile-nav-prev"
-        aria-label="Previous project"
-        data-prev
-        class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer flex items-center justify-center'
+        id='swiper-prev-mobile'
+        aria-label='Previous project'
+        class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer flex items-center justify-center active:scale-95 transition-transform'
         ><Icon name='tabler:arrow-left' class='w-5 h-5' /></button
       >
       <button
-        name="mobile-nav-next"
-        aria-label="Next project"
-        data-next
-        class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer flex items-center justify-center'
+        id='swiper-next-mobile'
+        aria-label='Next project'
+        class='lg:hidden bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)] w-10 h-10 cursor-pointer flex items-center justify-center active:scale-95 transition-transform'
         ><Icon name='tabler:arrow-right' class='w-5 h-5' /></button
       >
     </div>
   </div>
 
-  <!-- Slides -->
-  <div
-    class='relative mx-auto h-[clamp(500px,_60vw,_600px)]
-           sm:my-[clamp(1rem,_4vw,_5rem)] my-4
-           flex items-center justify-center'
-  >
-    {
-      projects.map((p, i) => (
-        <article
-          class={`flex flex-col h-full ${i === 0 ? '' : 'hidden'}`}
-          data-slide-index={i}
-          data-image={p.data.image.src}
-          data-aos='fade-left'
-          data-aos-delay='300'
-        >
-          <figure
-            class='rounded-tl-2xl rounded-tr-2xl overflow-hidden grid place-items-center
-                 aspect-[16/12] sm:aspect-[16/10] md:h-[clamp(220px,_48vw,_500px)]
-                 border border-solid border-b-0 border-[var(--primary)]'
-          >
-            <Image
-              src={p.data.image}
-              alt={p.data.imageAlt}
-              width={p.data.image.width}
-              height={p.data.image.height}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              fetchpriority={i === 0 ? 'high' : 'auto'}
-              decoding='async'
-              class='w-full h-full object-center object-cover block'
-            />
-          </figure>
+  <div class='relative mx-auto h-[clamp(500px,_60vw,_650px)]'>
+    <div class='swiper project-swiper h-full w-full !overflow-visible'>
+      <div class='swiper-wrapper'>
+        {
+          projects.map((p, i) => (
+            <div class='swiper-slide transition-opacity duration-300'>
+              <article
+                class='flex flex-col h-full w-full max-w-[1000px]'
+                data-image={p.data.image.src}
+              >
+                <figure
+                  class='rounded-tl-2xl rounded-tr-2xl overflow-hidden grid place-items-center
+      aspect-[16/12] sm:aspect-[16/10] md:h-[clamp(220px,_48vw,_500px)]
+      border border-solid border-b-0 border-[var(--primary)] m-0'
+                >
+                  <Image
+                    src={p.data.image}
+                    alt={p.data.imageAlt}
+                    width={p.data.image.width}
+                    height={p.data.image.height}
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    class='w-full h-full object-center object-cover block'
+                    draggable='false'
+                  />
+                </figure>
 
-          <div
-            class='rounded-bl-2xl rounded-br-2xl overflow-hidden
-                 border border-solid border-[var(--primary)] border-t-0
-                 bg-[var(--bg-3)] flex flex-col gap-3
-                 min-h-[140px] sm:min-h-[200px] md:min-h-[230px] px-4 py-7 lg:p-4'
-          >
-            <h3 class='text-[clamp(1.2rem,_5vw,_2rem)] tracking-wide font-chakra font-bold leading-tight'>
-              {p.data.title}
-            </h3>
+                <div
+                  class='rounded-bl-2xl rounded-br-2xl overflow-hidden
+                        border border-solid border-[var(--primary)] border-t-0
+                        bg-[var(--bg-3)] flex flex-col gap-3
+                        min-h-[140px] sm:min-h-[200px] md:min-h-[230px] px-4 py-8 lg:p-4 w-full flex-grow'
+                >
+                  <h3 class='text-[clamp(1.2rem,_5vw,_2rem)] tracking-wide font-chakra font-bold leading-tight'>
+                    {p.data.title}
+                  </h3>
 
-            <p class='text-[clamp(0.9rem,_3.6vw,_1rem)] leading-snug'>
-              {p.data.description}
-            </p>
+                  <p class='text-[clamp(0.9rem,_3.6vw,_1rem)] leading-snug'>
+                    {p.data.description}
+                  </p>
 
-            <div class='flex flex-wrap items-center gap-3 justify-between mt-1'>
-              <div class='flex flex-wrap gap-4'>
-                {p.data.tech?.map((t) => (
-                  <span class='chip text-xs sm:text-sm'>{t}</span>
-                ))}
-              </div>
-              <div class='w-full flex items-center justify-end'>
-                {p.data.live && (
-                  <Button
-                    name={`live-${p.data.title.replace(/\s+/g, '-').toLowerCase()}`}
-                    variant='secondary'
-                    href={p.data.live}
-                    blank
-                    class='max-w-30 !px-4 !py-2 text-sm sm:text-base'
-                  >
-                    Live
-                  </Button>
-                )}
-                {p.data.repository && (
-                  <Button
-                    name={`repo-${p.data.title.replace(/\s+/g, '-').toLowerCase()}`}
-                    variant='secondary'
-                    href={p.data.repository}
-                    blank
-                    class='max-w-30 !px-4 !py-2 text-sm sm:text-base'
-                  >
-                    Github
-                  </Button>
-                )}
-              </div>
+                  <div class='pt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
+                    <div class='flex flex-wrap gap-2 sm:gap-4'>
+                      {p.data.tech?.map((t) => (
+                        <span class='chip text-xs sm:text-sm'>{t}</span>
+                      ))}
+                    </div>
+
+                    <div class='flex items-center gap-3 w-full sm:w-auto justify-end'>
+                      {p.data.live && (
+                        <Button
+                          variant='secondary'
+                          href={p.data.live}
+                          blank
+                          class='flex-1 sm:flex-none text-center justify-center !px-10 !py-2 text-sm sm:text-base z-10 relative'
+                        >
+                          Live
+                        </Button>
+                      )}
+                      {p.data.repository && (
+                        <Button
+                          variant='secondary'
+                          href={p.data.repository}
+                          blank
+                          class='flex-1 sm:flex-none text-center justify-center !px-10 !py-2 text-sm sm:text-base z-10 relative'
+                        >
+                          Github
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </article>
             </div>
-          </div>
-        </article>
-      ))
-    }
+          ))
+        }
+      </div>
+    </div>
 
     <button
-      name="desktop-nav-prev"
-      aria-label="Previous project"
-      data-prev
+      id='swiper-prev-desktop'
+      aria-label='Previous project'
       class='hidden lg:grid place-items-center
-             absolute top-1/2 -translate-y-1/2 -left-5
+             absolute top-1/2 -translate-y-1/2 -left-16 z-20
              bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
-             w-15 h-15 cursor-pointer text-2xl'
+             w-15 h-15 cursor-pointer text-2xl active:scale-95 transition-transform'
       ><Icon name='tabler:arrow-left' class='w-5 h-5' /></button
     >
     <button
-      name="desktop-nav-next"
-      aria-label="Next project"
-      data-next
+      id='swiper-next-desktop'
+      aria-label='Next project'
       class='hidden lg:grid place-items-center
-             absolute top-1/2 -translate-y-1/2 -right-5
+             absolute top-1/2 -translate-y-1/2 -right-16 z-20
              bg-[var(--bg)] rounded-full border border-solid border-[var(--primary)] shadow-[var(--glow-green)]
-             w-15 h-15 cursor-pointer text-2xl'
+             w-15 h-15 cursor-pointer text-2xl active:scale-95 transition-transform'
       ><Icon name='tabler:arrow-right' class='w-5 h-5' /></button
     >
   </div>
 </section>
 
-<script is:inline>
-  (() => {
-    const slides = Array.from(
-      document.querySelectorAll('#projects [data-slide-index]')
-    );
-    if (!slides.length) return;
+<script>
+  import Swiper from 'swiper';
+  import { Navigation } from 'swiper/modules';
 
+  import 'swiper/css';
+  import 'swiper/css/navigation';
+  import 'swiper/css/effect-fade';
+
+  document.addEventListener(
+    'astro:page-load',
+    () => {
+      initSwiper();
+    },
+    { once: true }
+  );
+
+  if (document.readyState === 'complete') initSwiper();
+  else document.addEventListener('DOMContentLoaded', initSwiper);
+
+  function initSwiper() {
     const bg = document.getElementById('projects-bg');
 
-    const pickURL = (img) => img.currentSrc || img.src || '';
+    const updateBackground = (slideEl) => {
+      if (!slideEl || !bg) return;
+      const article = slideEl.querySelector('article');
+      const imgSrc = article?.getAttribute('data-image');
 
-    const setBGFromImg = (img) => {
-      const url = pickURL(img);
-      if (!url || url.startsWith('data:')) return false;
-      bg.style.backgroundImage = `url("${url}")`;
-      return true;
+      if (imgSrc) {
+        bg.style.backgroundImage = `url("${imgSrc}")`;
+      }
     };
 
-    const firstImg = slides[0].querySelector('img');
-    if (!setBGFromImg(firstImg)) {
-      firstImg.addEventListener('load', () => setBGFromImg(firstImg), {
-        once: true,
-      });
-      firstImg.loading = 'eager';
-      firstImg.fetchPriority = 'high';
-    }
+    const swiper = new Swiper('.project-swiper', {
+      modules: [Navigation],
+      loop: true,
+      speed: 600,
+      spaceBetween: 30,
+      grabCursor: true,
+      autoHeight: true,
+      centeredSlides: true,
+      slidesPerView: 1,
 
-    let idx = 0;
+      navigation: {
+        nextEl: '#swiper-next-desktop, #swiper-next-mobile',
+        prevEl: '#swiper-prev-desktop, #swiper-prev-mobile',
+      },
 
-    const show = (next) => {
-      idx = (next + slides.length) % slides.length;
-
-      slides.forEach((s, i) => s.classList.toggle('hidden', i !== idx));
-
-      const img = slides[idx].querySelector('img');
-
-      if (setBGFromImg(img)) return;
-
-      img.loading = 'eager';
-      img.fetchPriority = 'high';
-      img.addEventListener('load', () => setBGFromImg(img), { once: true });
-    };
-
-    document
-      .querySelectorAll('#projects [data-prev]')
-      .forEach((b) => b.addEventListener('click', () => show(idx - 1)));
-    document
-      .querySelectorAll('#projects [data-next]')
-      .forEach((b) => b.addEventListener('click', () => show(idx + 1)));
-
-    show(0);
-  })();
+      on: {
+        init: (s) => {
+          const activeSlide = s.slides[s.activeIndex];
+          updateBackground(activeSlide);
+        },
+        slideChange: (s) => {
+          const activeSlide = s.slides[s.activeIndex];
+          updateBackground(activeSlide);
+        },
+      },
+    });
+  }
 </script>

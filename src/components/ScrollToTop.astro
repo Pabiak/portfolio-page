@@ -6,7 +6,7 @@ import { Icon } from 'astro-icon/components';
   name='scrollToTop'
   id='scroll-to-top'
   aria-label='Scroll to top'
-  class='flex items-center justify-center w-15 h-15 rounded-full bg-[var(--bg)] border border-[var(--primary)] text-white shadow-[var(--glow-muted)] fixed bottom-5 right-5 cursor-pointer tansition-all duration-300 hover:scale-105 opacity-0 pointer-events-none'
+  class='flex items-center justify-center w-15 h-15 rounded-full bg-[var(--bg)] border border-[var(--primary)] text-white shadow-[var(--glow-muted)] fixed bottom-5 right-5 cursor-pointer tansition-all duration-300 hover:scale-105 opacity-0 pointer-events-none z-10'
 >
   <span class='sr-only'>Scroll to top</span>
   <Icon name='tabler:arrow-up' class='w-7 h-7' />
@@ -33,7 +33,12 @@ import { Icon } from 'astro-icon/components';
   observer.observe(homeSection);
 
   scrollToTopButton.addEventListener('click', () => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    });
   });
 </script>
