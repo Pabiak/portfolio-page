@@ -84,7 +84,7 @@ const projects = raw
                     width={p.data.image.width}
                     height={p.data.image.height}
                     loading={i === 0 ? 'eager' : 'lazy'}
-                    class='w-full h-full object-center object-cover block'
+                    class='w-full h-full object-center block'
                     draggable='false'
                   />
                 </figure>
@@ -93,7 +93,7 @@ const projects = raw
                   class='rounded-bl-2xl rounded-br-2xl overflow-hidden
                         border border-solid border-[var(--primary)] border-t-0
                         bg-[var(--bg-3)] flex flex-col gap-3
-                        min-h-[140px] sm:min-h-[200px] md:min-h-[230px] px-4 py-8 lg:p-4 w-full flex-grow'
+                        min-h-[230px] px-4 py-8 lg:p-4 w-full flex-grow'
                 >
                   <h3 class='text-[clamp(1.2rem,_5vw,_2rem)] tracking-wide font-chakra font-bold leading-tight'>
                     {p.data.title}
@@ -103,7 +103,7 @@ const projects = raw
                     {p.data.description}
                   </p>
 
-                  <div class='pt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
+                  <div class='py-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
                     <div class='flex flex-wrap gap-2 sm:gap-4'>
                       {p.data.tech?.map((t) => (
                         <span class='chip text-xs sm:text-sm'>{t}</span>
@@ -175,7 +175,7 @@ const projects = raw
     () => {
       initSwiper();
     },
-    { once: true }
+    { once: true },
   );
 
   if (document.readyState === 'complete') initSwiper();
@@ -200,7 +200,6 @@ const projects = raw
       speed: 600,
       spaceBetween: 30,
       grabCursor: true,
-      autoHeight: true,
       centeredSlides: true,
       slidesPerView: 1,
 

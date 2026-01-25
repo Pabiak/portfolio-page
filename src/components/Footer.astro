@@ -1,6 +1,18 @@
 ---
 const year = new Date().getFullYear();
 ---
-<footer class="w-[min(var(--container), 92vw)] mx-auto py-12 text-[var(--muted)] text-center">
-    <div>&copy; {year}, piotrlabiak.pl Wszelkie prawa zastrzeżone</div>
+
+<footer
+  class='w-[min(var(--container),_92vw)] mx-auto py-12 text-[var(--muted)] text-center'
+>
+  <div>
+    &copy;
+    <span id='copyright-year'>{year}</span>, piotrlabiak.pl Wszelkie prawa
+    zastrzeżone
+  </div>
 </footer>
+
+<script is:inline>
+  document.getElementById('copyright-year').innerText =
+    new Date().getFullYear();
+</script>

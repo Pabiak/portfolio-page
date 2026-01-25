@@ -1,3 +1,28 @@
+---
+const technologies = [
+  'TypeScript',
+  'JavaScript',
+  'React',
+  'Remix',
+  'Astro',
+  'HTML5',
+  'SCSS',
+  'Tailwind',
+  'MUI',
+  'Styled Components',
+  'Zustand',
+  'Context API',
+  'TanStack Query',
+  'Vite',
+  'Vitest',
+  'Cypress',
+  'Node.js',
+  'Express',
+  'Git / Github / Gitlab',
+  'Figma',
+];
+---
+
 <section
   id='technologies'
   class='w-full px-[clamp(3rem,_6vw,_6rem)] my-10 relative w-[min(var(--container), 92vw)] mx-auto'
@@ -16,31 +41,12 @@
   sm:[grid-template-columns:repeat(2,_minmax(220px,_1fr))]
   lg:[grid-template-columns:repeat(5,_minmax(220px,_1fr))]'
   >
-    <li class='tech' data-aos='flip-left' data-aos-delay='300'>TypeScript</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='350'>JavaScript</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='400'>React</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='400'>Remix</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='450'>Astro</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='500'>HTML5</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='550'>SCSS</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='600'>Tailwind</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='600'>MUI</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='650'>
-      Styled Components
-    </li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='700'>Zustand</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='750'>Context API</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='800'>
-      TanStack Query
-    </li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='850'>Vite</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='900'>Vitest</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='950'>Cypress</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='1000'>Node.js</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='1050'>Express</li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='1100'>
-      Git / Github
-    </li>
-    <li class='tech' data-aos='flip-left' data-aos-delay='1150'>Figma</li>
+    {
+      technologies.map((tech, index) => (
+        <li class='tech' data-aos='flip-left' data-aos-delay={300 + index * 50}>
+          {tech}
+        </li>
+      ))
+    }
   </ul>
 </section>
